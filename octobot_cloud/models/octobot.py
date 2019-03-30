@@ -18,7 +18,7 @@ import os
 from secrets import token_hex
 
 from octobot_cloud import BOTS_FOLDER, CONFIG_FILE, LOGS_FOLDER, TENTACLES_FOLDER, DEFAULT_PORT
-from octobot_cloud.models.container import get_container_from_name
+from octobot_cloud.models.container import Container
 from octobot_cloud.tools.socket_tools import get_open_port
 
 
@@ -35,9 +35,6 @@ class OctoBot:
         self.ports = self._ports()
         self.volumes = self._volumes()
         self.container = self._container()
-
-    def is_running(self) -> bool:
-        return self.container is not None
 
     def _create_path(self):
         os.makedirs(self.path)
@@ -57,4 +54,4 @@ class OctoBot:
                 os.path.join(self.path, TENTACLES_FOLDER): {'bind': '/bot/octobot/tentacles', 'mode': 'rw'}}
 
     def _container(self):
-        return get_container_from_name(self.token)
+        return Container(self.token)

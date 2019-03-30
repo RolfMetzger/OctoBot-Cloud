@@ -27,3 +27,4 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.WARNING)
 
 docker_client = docker.from_env()
+docker_client_api = docker.APIClient()

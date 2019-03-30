@@ -1,0 +1,7 @@
+{% extends "layout_without_footer.html" %}
+{% block body %}
+<div class="show_embedded">
+    <embed src="http://localhost:{{port}}" style="position: fixed" width="100%" height="100%" onerror="alert('Fail to load OctoBot');" />
+</div>
+<br/>
+{% endblock %}

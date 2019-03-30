@@ -13,8 +13,9 @@
 #
 #  You should have received a copy of the GNU Lesser General Public
 #  License along with this library.
+from flask import render_template
 
-from octobot_cloud import server_instance, docker_client, OCTOBOT_OFFICIAL_IMAGE
+from octobot_cloud import server_instance, docker_client, OCTOBOT_OFFICIAL_IMAGE, DEFAULT_PORT
 from octobot_cloud.models.octobot import OctoBot
 
 
@@ -29,17 +30,19 @@ def run():
     return ""
 
 
-@server_instance.route("/status/<token>")
+@server_instance.route("/show/<token>")
 def status(token):
     bot = OctoBot(token)
-    if bot.is_running():
-        print(bot.container.get_container_ports())
-    return ""
+    if bot.container.is_running():
+        port = bot.container.get_host_corresponding_port(DEFAULT_PORT)
+        return render_template('show_embedded.html', port=port)
+    else:
+        return render_template('show.html')
 
 
 @server_instance.route("/stop/<token>")
 def stop(token):
     bot = OctoBot(token)
-    if bot.is_running():
+    if bot.container.is_running():
         bot.container.kill()
     return ""

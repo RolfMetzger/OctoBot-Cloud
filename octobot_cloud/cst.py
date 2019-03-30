@@ -13,6 +13,7 @@
 #
 #  You should have received a copy of the GNU Lesser General Public
 #  License along with this library.
+from enum import Enum
 
 PROJECT_NAME = "octobot_cloud"
 VERSION = "1.0.0"
@@ -33,3 +34,10 @@ LOGGING_CONFIG_FILE = f"{LOGS_FOLDER}/logging_config.ini"
 # App
 DEFAULT_SERVER_IP = 'localhost'
 DEFAULT_SERVER_PORT = 8080
+
+
+class ContainerStatus(Enum):
+    RESTARTING = "restarting"
+    RUNNING = "running"
+    PAUSED = "paused"
+    EXITED = "exited"
