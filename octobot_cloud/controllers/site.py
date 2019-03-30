@@ -13,8 +13,13 @@
 #
 #  You should have received a copy of the GNU Lesser General Public
 #  License along with this library.
+from flask import render_template
+
+from octobot_cloud import server_instance
 
 
-def load_routes():
-    from . import bot
-    from . import site
+@server_instance.route("/")
+@server_instance.route("/home")
+def home():
+    return render_template('index.html')
+

@@ -24,6 +24,7 @@ OCTOBOT_OFFICIAL_IMAGE = "drakkarsoftware/octobot"
 CONFIG_FILE = "config.json"
 LOGS_FOLDER = "logs"
 TENTACLES_FOLDER = "tentacles"
+DEFAULT_PORT = 5001
 
 # OctoBot-Cloud
 BOTS_FOLDER = "bots"

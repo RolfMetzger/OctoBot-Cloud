@@ -21,14 +21,19 @@ from octobot_cloud.models.octobot import OctoBot
 @server_instance.route("/run")
 def run():
     bot = OctoBot()
-    docker_client.containers.run(OCTOBOT_OFFICIAL_IMAGE, detach=True, volumes=bot.volumes, name=bot.token)
+    docker_client.containers.run(OCTOBOT_OFFICIAL_IMAGE,
+                                 volumes=bot.volumes,
+                                 ports=bot.ports,
+                                 name=bot.token,
+                                 detach=True)
     return ""
 
 
 @server_instance.route("/status/<token>")
 def status(token):
     bot = OctoBot(token)
-    docker_client.containers.run(OCTOBOT_OFFICIAL_IMAGE, detach=True, volumes=bot.volumes, name=bot.token)
+    if bot.is_running():
+        print(bot.container.get_container_ports())
     return ""
 
 
