@@ -13,21 +13,22 @@
 #
 #  You should have received a copy of the GNU Lesser General Public
 #  License along with this library.
-import logging
-from logging.config import fileConfig
 
-from octobot_cloud import LOGGING_CONFIG_FILE
-from octobot_cloud.app import start_webapp
+PROJECT_NAME = "octobot_cloud"
+VERSION = "1.0.0"
 
+# docker
+OCTOBOT_OFFICIAL_IMAGE = "drakkarsoftware/octobot"
 
-def main():
-    fileConfig(LOGGING_CONFIG_FILE)
+# OctoBot
+CONFIG_FILE = "config.json"
+LOGS_FOLDER = "logs"
+TENTACLES_FOLDER = "tentacles"
 
-    logger = logging.getLogger("OctoBot-Cloud::Main")
-    logger.info("starting...")
+# OctoBot-Cloud
+BOTS_FOLDER = "bots"
+LOGGING_CONFIG_FILE = f"{LOGS_FOLDER}/logging_config.ini"
 
-    start_webapp()
-
-
-if __name__ == '__main__':
-    main()
+# App
+DEFAULT_SERVER_IP = 'localhost'
+DEFAULT_SERVER_PORT = 8080

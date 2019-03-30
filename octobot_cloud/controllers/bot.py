@@ -13,21 +13,28 @@
 #
 #  You should have received a copy of the GNU Lesser General Public
 #  License along with this library.
-import logging
-from logging.config import fileConfig
 
-from octobot_cloud import LOGGING_CONFIG_FILE
-from octobot_cloud.app import start_webapp
+from octobot_cloud import server_instance, docker_client, OCTOBOT_OFFICIAL_IMAGE
+from octobot_cloud.models.octobot import OctoBot
 
 
-def main():
-    fileConfig(LOGGING_CONFIG_FILE)
-
-    logger = logging.getLogger("OctoBot-Cloud::Main")
-    logger.info("starting...")
-
-    start_webapp()
+@server_instance.route("/run")
+def run():
+    bot = OctoBot()
+    docker_client.containers.run(OCTOBOT_OFFICIAL_IMAGE, detach=True, volumes=bot.volumes, name=bot.token)
+    return ""
 
 
-if __name__ == '__main__':
-    main()
+@server_instance.route("/status/<token>")
+def status(token):
+    bot = OctoBot(token)
+    docker_client.containers.run(OCTOBOT_OFFICIAL_IMAGE, detach=True, volumes=bot.volumes, name=bot.token)
+    return ""
+
+
+@server_instance.route("/stop/<token>")
+def stop(token):
+    bot = OctoBot(token)
+    if bot.is_running():
+        bot.container.kill()
+    return ""

@@ -1,13 +1,29 @@
-PROJECT_NAME = "octobot_cloud"
-VERSION = "1.0.0"
+#  Drakkar-Software OctoBot-Cloud
+#  Copyright (c) Drakkar-Software, All rights reserved.
+#
+#  This library is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU Lesser General Public
+#  License as published by the Free Software Foundation; either
+#  version 3.0 of the License, or (at your option) any later version.
+#
+#  This library is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public
+#  License along with this library.
 
-# docker
-OCTOBOT_OFFICIAL_IMAGE = "drakkarsoftware/octobot"
+import logging
+import docker
+import flask
 
-# OctoBot-Cloud
-BOTS_FOLDER = "bots"
+from octobot_cloud.cst import *
 
-# OctoBot
-CONFIG_FILE = "config.json"
-LOGS_FOLDER = "logs"
-TENTACLES_FOLDER = "tentacles"
+server_instance = flask.Flask(__name__)
+
+# disable Flask logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.WARNING)
+
+docker_client = docker.from_env()

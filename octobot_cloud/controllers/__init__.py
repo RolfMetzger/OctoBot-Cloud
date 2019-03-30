@@ -13,21 +13,7 @@
 #
 #  You should have received a copy of the GNU Lesser General Public
 #  License along with this library.
-import logging
-from logging.config import fileConfig
-
-from octobot_cloud import LOGGING_CONFIG_FILE
-from octobot_cloud.app import start_webapp
 
 
-def main():
-    fileConfig(LOGGING_CONFIG_FILE)
-
-    logger = logging.getLogger("OctoBot-Cloud::Main")
-    logger.info("starting...")
-
-    start_webapp()
-
-
-if __name__ == '__main__':
-    main()
+def load_routes():
+    from . import bot
